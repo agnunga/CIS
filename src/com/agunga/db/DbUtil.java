@@ -74,13 +74,13 @@ public class DbUtil {
     }
 
     public static int insert(PreparedStatement preparedStatement) {
-        int isInserted = 0;
+        int isInserted = -1;
         try {
             isInserted = preparedStatement.executeUpdate();
         } catch (SQLException e) {
 //            e.printStackTrace();
             if(e.getErrorCode() == 1062)
-                MyUtility.myPrintln("Patient will not be added. Record exists.");
+                MyUtility.myPrintln("Record exists.");
         }
         System.out.println("isInserted =  "+isInserted);
         return isInserted;
@@ -110,12 +110,12 @@ public class DbUtil {
     }
 
 
-    public static boolean delete(String sql_delete, int id) {
-        boolean isDeleted = false;
+    public static int delete(String sql_delete, int id) {
+        int isDeleted = -1;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql_delete);
             preparedStatement.setInt(1, id);
-            isDeleted = preparedStatement.execute();
+            isDeleted = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

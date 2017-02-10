@@ -61,7 +61,7 @@ public class ClinicIS {
         Receptionist receptionist = new Receptionist();
 
         System.out.println("Hi Receptionist, Choose a course of action: ");
-        System.out.println("1: Register patient \t 2: View patient record \t 3: Update patient record \t 9: for main menu \t 0: to exit");
+        System.out.println("1: Register patient \t 2: View patient record \t 9: for main menu \t 0: to exit");
 
         String task = scanner.next();
 
@@ -81,12 +81,32 @@ public class ClinicIS {
             }
             case "2": {
                 System.out.println("View patient details");
-                String i;
+                String i = "1";
                 do {
-                    receptionist.viewPatientDetails();
-                    System.out.println("Press 1. to view another patient's details, 0. to quit");
+                    switch (i){
+                        case "0":{
+                            promptRole("1");
+                            break;
+                        }
+                        case "1":{
+                            receptionist.viewPatientDetails();
+                            break;
+                        }
+                        case "2":{
+                            MyUtility.myPrintln("Update patient's record");
+                            break;
+                        }
+                        case "3":{
+                            MyUtility.myPrintln("Delete patient's record");
+                            break;
+                        }
+                        default:{
+                            break;
+                        }
+                    }
+                    System.out.println("Press 1. to view another patient's details, 2. to update, 3. to delete 0. to quit");
                     i=MyUtility.myScanner().next();
-                }while (i!="0");
+                }while (i!="");
                 promptRole("1");
                 break;
             }
@@ -99,6 +119,7 @@ public class ClinicIS {
 
 
     public static void doctorRole(){
+        Doctor doctor = new Doctor();
         System.out.println("Hi Doctor, Choose a course of action: ");
         System.out.println("1. Diagnosis \t 2. Prescription \t 9: for main menu \t 0. to exit");
         String task = (scanner.next());
@@ -109,7 +130,6 @@ public class ClinicIS {
             case "1": {
                 System.out.println(" Diagnosis ");
                 int i;
-                Doctor doctor = new Doctor();
                 do {
                     doctor.recordDiagnosis();
                     System.out.println("Press 1. to Diagnose another patient, 0. to quit this");
@@ -120,6 +140,13 @@ public class ClinicIS {
             }
             case "2": {
                 System.out.println("Prescription");
+                int i;
+                do {
+                    doctor.recordPrescription();
+                    System.out.println("Press 1. to Prescribe another patient, 0. to quit this");
+                    i=MyUtility.myScanner().nextInt();
+                }while (i!=0);
+                promptRole("3");
                 break;
             }
             default: {
@@ -142,7 +169,7 @@ public class ClinicIS {
                 Nurse nurse = new Nurse();
                 int i;
                 do {
-                    nurse.work();
+                    nurse.dispatchDrugs();
                     System.out.println("Press 1. to record another patient's drugs, 0. to quit this");
                     i=MyUtility.myScanner().nextInt();
                 }while (i!=0);

@@ -67,9 +67,30 @@ public class Doctor extends Employee {
     }
 
     public void recordPrescription(){
-        Patient patient = new Patient("5");
-        String output = patient.getNationalId() +" "+patient.getPrescription();
-        System.out.println(output);
+        connection = DbUtil.connectDB(DbType.MYSQL);
+        Patient patient = new Patient();
+        System.out.print("Enter patient's National ID: ");
+        patient.setNationalId(MyUtility.myScanner().nextInt());
+
+        System.out.print("Enter the patient's prescription: ");
+        patient.setDiagnosis(MyUtility.myScanner().nextLine());
+
+        String sql_update = "UPDATE "+patients_table+" " +
+                " SET prescription = ? " +
+                " WHERE nationalid = ?";
+
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(sql_update);
+            preparedStatement.setString(1, patient.getDiagnosis());
+            preparedStatement.setInt(2, patient.getNationalId());
+
+            if(DbUtil.update(sql_update, preparedStatement)>0)System.out.println("Prescription recorded.");
+            else System.out.println("Failed to record prescription.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

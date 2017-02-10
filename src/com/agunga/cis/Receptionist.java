@@ -118,9 +118,9 @@ public class Receptionist extends Employee {
         }
 
         String sql_insert_patient = "INSERT INTO patients " +
-                "(nationalid, patientid, checkin, addedby) " +
-                "VALUES " +
-                "(?, ?, CURRENT_TIMESTAMP, ?)";
+                " (nationalid, patientid, checkin, addedby) " +
+                " VALUES " +
+                " (?, ?, CURRENT_TIMESTAMP, ?)";
 
         PreparedStatement preparedStatement2;
         try {
@@ -147,7 +147,7 @@ public class Receptionist extends Employee {
     }
 
     public void viewPatientDetails() {
-        System.out.print("To view patient's details\n");
+//        System.out.print("To view patient's details\n");
         System.out.print("Enter the ID Number: ");
         long id= MyUtility.scanInt();
         String sql_select = "SELECT " +
