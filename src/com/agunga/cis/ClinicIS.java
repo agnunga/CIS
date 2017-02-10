@@ -59,8 +59,9 @@ public class ClinicIS {
 
     public static void receptionistRole(){
         Receptionist receptionist = new Receptionist();
-
-        System.out.println("Hi Receptionist, Choose a course of action: ");
+        /*Confirm if the receptionist exists, if not, the receptionist registers first before performing any operation*/
+        receptionist.registerReceptionist();
+        System.out.println("Hi "+receptionist.getName()+", Choose a course of action: ");
         System.out.println("1: Register patient \t 2: View patient record \t 9: for main menu \t 0: to exit");
 
         String task = scanner.next();
@@ -157,8 +158,8 @@ public class ClinicIS {
     }
 
     public static void nurseRole(){
-        System.out.println("HiNurse, Choose a course of action: ");
-        System.out.println("1. Dispatch drugs \t 2. Write report \t 9: for main menu \t 0. to exit");
+        System.out.println("Hi Nurse, Choose a course of action: ");
+        System.out.println("1. Dispatch drugs \t 9: for main menu \t 0. to exit");// 	 2. Write report
         String task = scanner.next();
 
         backAndMenu(task);
@@ -176,10 +177,10 @@ public class ClinicIS {
                 promptRole("4");
                 break;
             }
-            case "2": {
-                System.out.println(" patient report");
-                break;
-            }
+//            case "2": {
+//                System.out.println(" patient report");
+//                break;
+//            }
             default: {
                 System.out.println("Invalid option. Try again");
                 promptRole("4");

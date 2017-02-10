@@ -82,7 +82,7 @@ public class DbUtil {
             if(e.getErrorCode() == 1062)
                 MyUtility.myPrintln("Record exists.");
         }
-        System.out.println("isInserted =  "+isInserted);
+//        System.out.println("isInserted =  "+isInserted);
         return isInserted;
     }
 
