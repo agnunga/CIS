@@ -23,7 +23,7 @@ public class ClinicIS {
 
     public static String  checkForRole () {
         System.out.println("Main menu: Choose Role ");
-        System.out.println(" 1. for Receptionist \n 2. for Lab tech \n 3. for com.agunga.cis.Doctor \n 4. for com.agunga.cis.Nurse \n 0. to exit");
+        System.out.println(" 1. for Receptionist \n 2. for Lab tech \n 3. for Doctor \n 4. for Nurse \n 0. to exit");
 
         String role = scanner.next();
         return role;
@@ -60,8 +60,8 @@ public class ClinicIS {
     public static void receptionistRole(){
         Receptionist receptionist = new Receptionist();
 
-        System.out.println("Hi com.agunga.cis.Receptionist, Choose a course of action: ");
-        System.out.println("1: Register patient \t 2: View patient record \t 9: for main menu \t 0: to exit");
+        System.out.println("Hi Receptionist, Choose a course of action: ");
+        System.out.println("1: Register patient \t 2: View patient record \t 3: Update patient record \t 9: for main menu \t 0: to exit");
 
         String task = scanner.next();
 
@@ -83,7 +83,7 @@ public class ClinicIS {
                 System.out.println("View patient details");
                 String i;
                 do {
-                    receptionist.viewPatient();
+                    receptionist.viewPatientDetails();
                     System.out.println("Press 1. to view another patient's details, 0. to quit");
                     i=MyUtility.myScanner().next();
                 }while (i!="0");
@@ -99,7 +99,7 @@ public class ClinicIS {
 
 
     public static void doctorRole(){
-        System.out.println("Hi com.agunga.cis.Doctor, Choose a course of action: ");
+        System.out.println("Hi Doctor, Choose a course of action: ");
         System.out.println("1. Diagnosis \t 2. Prescription \t 9: for main menu \t 0. to exit");
         String task = (scanner.next());
 
@@ -111,8 +111,8 @@ public class ClinicIS {
                 int i;
                 Doctor doctor = new Doctor();
                 do {
-                    doctor.work();
-                    System.out.println("Press 1. to Prescription another patient, 0. to quit this");
+                    doctor.recordDiagnosis();
+                    System.out.println("Press 1. to Diagnose another patient, 0. to quit this");
                     i=MyUtility.myScanner().nextInt();
                 }while (i!=0);
                 promptRole("3");
@@ -130,7 +130,7 @@ public class ClinicIS {
     }
 
     public static void nurseRole(){
-        System.out.println("Hi com.agunga.cis.Nurse, Choose a course of action: ");
+        System.out.println("HiNurse, Choose a course of action: ");
         System.out.println("1. Dispatch drugs \t 2. Write report \t 9: for main menu \t 0. to exit");
         String task = scanner.next();
 
@@ -150,7 +150,7 @@ public class ClinicIS {
                 break;
             }
             case "2": {
-                System.out.println("PatientDetail report");
+                System.out.println(" patient report");
                 break;
             }
             default: {
@@ -162,7 +162,7 @@ public class ClinicIS {
     }
 
     public static void labTechRole(){
-        System.out.println("Hi com.agunga.cis.Labtech, Choose a course of action: ");
+        System.out.println("Hi Labtech, Choose a course of action: ");
         System.out.println("1. Test patient \t 9: for main menu 0. to exit");
         String task = scanner.next();
 

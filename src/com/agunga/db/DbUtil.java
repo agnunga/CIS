@@ -99,10 +99,10 @@ public class DbUtil {
         return resultSet;
     }
 
-    public static boolean update(String sql_update, PreparedStatement preparedStatement) {
-        boolean isUpdated = false;
+    public static int update(String sql_update, PreparedStatement preparedStatement) {
+        int isUpdated = -1;
         try {
-            isUpdated = preparedStatement.execute();
+            isUpdated = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

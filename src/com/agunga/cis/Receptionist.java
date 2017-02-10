@@ -12,7 +12,8 @@ import java.sql.SQLException;
  * Created by agunga on 1/18/17.
  */
 public class Receptionist extends Employee {
-    private static String table_name = "a_employee";
+    private static String persons_table = "persons";
+    private static String patients_table = "patients";
     public static Connection connection = null;
 
     public boolean personExists(int nationalId){
@@ -145,7 +146,7 @@ public class Receptionist extends Employee {
         }
     }
 
-    public void viewPatient() {
+    public void viewPatientDetails() {
         System.out.print("To view patient's details\n");
         System.out.print("Enter the ID Number: ");
         long id= MyUtility.scanInt();
@@ -204,6 +205,32 @@ public class Receptionist extends Employee {
             }
         }
 
+    }
+
+    public void updatePatintDetails(){
+        viewPatientDetails();
+
+        String sql_update = "UPDATE "+persons_table+" " +
+                " SET name = ?, dob = ?, phone = ?, sex= ? " +
+                " WHERE nationalid = ?";
+
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(sql_update);
+            preparedStatement.setString(1, getName());
+            preparedStatement.setString(2, getDob());
+            preparedStatement.setString(3, getPhone());
+            preparedStatement.setString(4, getSex());
+            preparedStatement.setInt(5, getNationalId());
+
+            if(DbUtil.update(sql_update, preparedStatement)> 0)System.out.println("Employee deleted.");
+            else System.out.println("Failed to delete employee.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Details After Updating.");
+        viewPatientDetails();
     }
 
     @Override
