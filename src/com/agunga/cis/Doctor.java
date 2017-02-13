@@ -118,8 +118,8 @@ public class Doctor extends Employee {
 //        PreparedStatement preparedStatement;
 //        try {
 //            preparedStatement = connection.prepareStatement(sql_insert);
-////            preparedStatement.setString(2, employee.getEmp_no());
-////            preparedStatement.setString(3, employee.getDate_employed());
+////            preparedStatement.setString(2, employee.getEmployeeNo());
+////            preparedStatement.setString(3, employee.getDateEmployed());
 ////            preparedStatement.setString(4, employee.getSalary());
 ////            preparedStatement.setString(5, employee.getTitle());
 //

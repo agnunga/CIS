@@ -60,6 +60,7 @@ public class ClinicIS {
     public static void receptionistRole(){
         Receptionist receptionist = new Receptionist();
         /*Confirm if the receptionist exists, if not, the receptionist registers first before performing any operation*/
+        System.out.print("Confirm your details. ");
         receptionist.registerReceptionist();
         System.out.println("Hi "+receptionist.getName()+", Choose a course of action: ");
         System.out.println("1: Register patient \t 2: View patient record \t 9: for main menu \t 0: to exit");

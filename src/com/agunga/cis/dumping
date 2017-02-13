@@ -6,3 +6,44 @@ String sql_select = "SELECT " +
                 " FROM persons person, patients patient " +
                 " WHERE patient.nationalid = person.nationalid " +
                 " AND patient.nationalid = "+id+"";
+
+
+    public boolean personExists(int nationalId){
+        boolean exists= false;
+        Patient patient = new Patient();
+        String sql_select = "SELECT " +
+                " persons.id, patients.id, " +
+                " persons.nationalid, patientid, name, persons.phone, persons.dob, persons.sex, " +
+                " patients.checkin, patients.checkout, patients.addedby " +
+                " FROM persons JOIN patients " +
+                " ON persons.nationalid  = patients.nationalid" +
+                " WHERE persons.nationalid = "+nationalId+" ORDER BY patientid ASC LIMIT 1";
+
+        connection = DbUtil.connectDB(DbType.MYSQL);
+        ResultSet resultSet = DbUtil.select(sql_select);
+        try {
+//            System.out.println("This person's details exist in our system.");
+            while(resultSet.next()){
+                exists = true;
+
+                patient.setNationalId(resultSet.getInt("nationalid"));
+                patient.setPatientId(resultSet.getString("patientid"));
+
+//                System.out.print(resultSet.getInt(1)+"\t");
+//                System.out.print(resultSet.getString(2)+"\t");
+                System.out.print(resultSet.getString(3)+"\t");
+                System.out.print(resultSet.getString(4)+"\t");
+                System.out.print(resultSet.getString(5)+"\t");
+                System.out.print(resultSet.getString(6)+"\t");
+                System.out.print(resultSet.getString(7)+"\t");
+                System.out.print(resultSet.getString(8)+"\t");
+                System.out.print(resultSet.getString(9)+"\t");
+                System.out.print(resultSet.getString(10)+"\t");
+                System.out.print(resultSet.getString(11)+"\t");
+                System.out.println();
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
+    }

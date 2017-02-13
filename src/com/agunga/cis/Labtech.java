@@ -15,7 +15,13 @@ public class Labtech extends Employee {
     private static String patients_table = "patients";
     public static Connection connection = null;
 
-      public void recordTestResults(){
+    public void registerLabtech(){
+        Labtech labtech = new Labtech();
+        registerPerson(labtech);
+    }
+
+
+    public void recordTestResults(){
         connection = DbUtil.connectDB(DbType.MYSQL);
         Patient patient = new Patient();
         System.out.print("Enter PatientDetail's National ID: ");

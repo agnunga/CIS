@@ -78,7 +78,7 @@ public class DbUtil {
         try {
             isInserted = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             if(e.getErrorCode() == 1062)
                 MyUtility.myPrintln("Record exists.");
         }

@@ -1,9 +1,17 @@
 package com.agunga.cis;
 
+import com.agunga.db.DbType;
+import com.agunga.db.DbUtil;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Created by agunga on 1/18/17.
  */
 public class Patient extends Person {
+    public static Connection connection = null;
     private String patientId;
     private String checkin;
     private String checkout;
@@ -13,36 +21,7 @@ public class Patient extends Person {
     private String prescription;
     private String drugs;
 
-
     public Patient() {
-    }
-
-    public Patient(String role) {
-        switch (role){
-            case "1":{
-                add();
-                break;
-            }
-            case "2":{
-                test();
-                break;
-            }
-            case "3":{
-                diagnose();
-                break;
-            }
-            case "4":{
-                dispatchDrugs();
-                break;
-            }
-            case "5":{
-                prescribe();
-                break;
-            }
-            default:{
-                break;
-            }
-        }
     }
 
     public String getPatientId() {
@@ -169,5 +148,29 @@ public class Patient extends Person {
 
         System.out.print("Record drugs dispatched to the parient: ");
         setDrugs(MyUtility.myScanner().nextLine());
+    }
+
+    public boolean patientExists(int nationalId){
+        boolean exists= false;
+        String sql_select = "SELECT " +
+                " patients.nationalid, patients.patientid, persons.name, patients.checkin " +
+                " FROM patients JOIN persons" +
+                " ON patients.nationalid = persons.nationalid" +
+                " WHERE patients.nationalid = "+nationalId+" ORDER BY patients.checkin DESC LIMIT 1";
+
+        connection = DbUtil.connectDB(DbType.MYSQL);
+        ResultSet resultSet = DbUtil.select(sql_select);
+        try {
+            while(resultSet.next()){
+                exists = true;
+                setNationalId(resultSet.getInt(1));
+                setPatientId(resultSet.getString(2));
+                setName(resultSet.getString(3));
+                setCheckin(resultSet.getString(4));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
     }
 }
