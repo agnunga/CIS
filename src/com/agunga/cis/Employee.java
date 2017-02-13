@@ -62,18 +62,18 @@ abstract public class Employee extends Person {
         DbUtil.createTable(sql, "employees");
     }
 
-    public boolean checkEmployee(int nationalId){
+    public boolean checkEmployee(Employee employee){
         connection = DbUtil.connectDB(DbType.MYSQL);
 
         boolean exists = false;
         String sql = "SELECT employeeno " +
                 " FROM employees " +
-                " WHERE nationalid = "+nationalId+";";
+                " WHERE nationalid = "+employee.getNationalId()+";";
         ResultSet resultSet = DbUtil.select(sql);
         try {
             while (resultSet.next()){
                 exists = true;
-                setEmployeeNo(resultSet.getString(1));
+                employee.setEmployeeNo(resultSet.getString(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,7 +84,7 @@ abstract public class Employee extends Person {
     public void registerEmployee(Employee employee) {
         connection = DbUtil.connectDB(DbType.MYSQL);
         super.registerPerson(employee);
-        if (checkEmployee(employee.getNationalId())) {
+        if (checkEmployee(employee)) {
             System.out.print("Employee Exists. ");
         } else {
             System.out.print("Enter Employee Number: ");

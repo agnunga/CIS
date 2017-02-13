@@ -26,17 +26,18 @@ public class Receptionist extends Employee {
         this.assignment = assignment;
     }
 
-    public boolean checkReceptionist(String employeeNo){
+    public boolean checkReceptionist(Receptionist receptionist){
         connection = DbUtil.connectDB(DbType.MYSQL);
         boolean exists = false;
-        String sql = "SELECT assignment " +
+        String sql = "SELECT employeeno, assignment " +
                 " FROM receptionists " +
-                " WHERE employeeno = '"+employeeNo+"'";
+                " WHERE employeeno = '"+receptionist.getEmployeeNo()+"'";
         ResultSet resultSet = DbUtil.select(sql);
         try {
             while (resultSet.next()){
                 exists = true;
-                setAssignment(resultSet.getString(1));
+                receptionist.setEmployeeNo(resultSet.getString(1));
+                receptionist.setAssignment(resultSet.getString(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,23 +45,23 @@ public class Receptionist extends Employee {
         return exists;
     }
 
-    public void registerReceptionist(){
+    public void registerReceptionist(Receptionist receptionist){
         connection = DbUtil.connectDB(DbType.MYSQL);
-        Receptionist receptionist = new Receptionist();
+//        Receptionist receptionist = new Receptionist();
         registerEmployee(receptionist);
-        if(checkReceptionist(getEmployeeNo())){
+        if(checkReceptionist(receptionist)){
             System.out.print("Receptionist exists. Assignment: "+getAssignment()+". ");
         }else {
-            System.out.print("Enter receptionist's assignment office.");
-            setAssignment(MyUtility.myScanner().nextLine());
+            System.out.print("Enter receptionist's assignment office: ");
+            receptionist.setAssignment(MyUtility.myScanner().nextLine());
 
             String sql = "INSERT INTO receptionists " +
                     " (employeeno, assignment, dateassigned) " +
                     " VALUES(?, ?, CURRENT_TIMESTAMP )";
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, getEmployeeNo());
-                preparedStatement.setString(2, getAssignment());
+                preparedStatement.setString(1, receptionist.getEmployeeNo());
+                preparedStatement.setString(2, receptionist.getAssignment());
                 if(DbUtil.insert(preparedStatement)>0){
                     System.out.print("Receptionist added. ");
                 }else {
@@ -72,19 +73,18 @@ public class Receptionist extends Employee {
         }
     }
 
-    public void registerPatient(){
+    public void registerPatient(Receptionist receptionist){
         connection = DbUtil.connectDB(DbType.MYSQL);
         Patient patient = new Patient();
         registerPerson(patient);
 
         if(patient.patientExists(patient.getNationalId())){
-            System.out.print("Patient exists  "+patient.getName()+
-                    "("+patient.getNationalId()+") " +
-                    ", Last checkin: "+patient.getCheckin());
+            System.out.print("Patient exists, "+patient.getName()+
+                    "("+patient.getNationalId()+")" +
+                    ", Last checkin: "+patient.getCheckin()+". ");
         }else{
             System.out.print("Assign the Patient a Patient ID: ");
             patient.setPatientId(MyUtility.myScanner().next());
-
         }
 
         String sql_insert_patient = "INSERT INTO patients " +
@@ -94,14 +94,13 @@ public class Receptionist extends Employee {
 
         PreparedStatement preparedStatement2;
         try {
-
             preparedStatement2 = connection.prepareStatement(sql_insert_patient);
             preparedStatement2.setInt(1, patient.getNationalId());
             preparedStatement2.setString(2, patient.getPatientId());
-            preparedStatement2.setInt(3, getNationalId());
+            preparedStatement2.setString(3, receptionist.getEmployeeNo());
 
-            if(DbUtil.insert(preparedStatement2) > 0)System.out.println(" Patient new checkin registered.");
-            else System.err.println(" Patient new checkin registration Failed.");
+            if(DbUtil.insert(preparedStatement2) > 0)System.out.println("Patient's new check-in registered. ");
+            else System.err.println("Patient new checkin registration Failed. ");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,7 +120,7 @@ public class Receptionist extends Employee {
 //        System.out.print("To view patient's details\n");
         Patient patient = new Patient();
         System.out.print("Enter the national ID Number: ");
-        patient.setNationalId(MyUtility.scanInt());
+        patient.setNationalId(MyUtility.myScanInt());
         String sql_select = "SELECT " +
                 " person.id, patient.id, " +
                 " person.nationalid, patient.patientid, person.name, person.phone, person.dob, person.sex, " +
@@ -196,8 +195,6 @@ public class Receptionist extends Employee {
 
     @Override
     void work() {
-        Receptionist r = new Receptionist();
-        r.registerPatient();
 
     }
 }

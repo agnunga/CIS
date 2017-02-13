@@ -101,14 +101,13 @@ public class MyUtility {
         return output;
     }
 
-    public static int my_number;
-    public static int scanInt(){
-        String string = MyUtility.myScanner().nextLine();
+    public static int myScanInt(){
+        int my_number = 0;
         try {
-            my_number = Integer.parseInt(string);
+            my_number = Integer.parseInt(MyUtility.myScanner().nextLine());
         }catch (NumberFormatException e){
             MyUtility.myPrintln("Invalid Input,only numeric figures allowed. Try again");
-            scanInt();
+            myScanInt();
         }
         return my_number;
     }

@@ -93,7 +93,7 @@ public class Patient extends Person {
 
         System.out.print("\nAdd new Patient Details \n");
         System.out.print("Enter PatientDetail's National ID: ");
-        setNationalId(MyUtility.scanInt());
+        setNationalId(MyUtility.myScanInt());
 
         System.out.print("Enter the PatientDetail's Name: ");
         setName(MyUtility.myScanner().next());
@@ -144,7 +144,7 @@ public class Patient extends Person {
 
     public void dispatchDrugs(){
         System.out.print("Enter PatientDetail's National ID: ");
-        setNationalId(MyUtility.scanInt());
+        setNationalId(MyUtility.myScanInt());
 
         System.out.print("Record drugs dispatched to the parient: ");
         setDrugs(MyUtility.myScanner().nextLine());

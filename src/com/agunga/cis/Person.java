@@ -115,7 +115,7 @@ public class Person {
         connection = DbUtil.connectDB(DbType.MYSQL);
 
         System.out.print("Enter National ID: ");
-        person.setNationalId(MyUtility.scanInt());
+        person.setNationalId(MyUtility.myScanInt());
         if(checkPerson(person.getNationalId())){
             System.out.print("Person exists. ");
         }else {

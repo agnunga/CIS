@@ -60,8 +60,8 @@ public class ClinicIS {
     public static void receptionistRole(){
         Receptionist receptionist = new Receptionist();
         /*Confirm if the receptionist exists, if not, the receptionist registers first before performing any operation*/
-        System.out.print("Confirm your details. ");
-        receptionist.registerReceptionist();
+        System.out.print("Hi Receptionist, Confirm your details. ");
+        receptionist.registerReceptionist(receptionist);
         System.out.println("Hi "+receptionist.getName()+", Choose a course of action: ");
         System.out.println("1: Register patient \t 2: View patient record \t 9: for main menu \t 0: to exit");
 
@@ -74,7 +74,8 @@ public class ClinicIS {
                 String i;
                 do {
                     /*Add new patient*/
-                    receptionist.registerPatient();
+                    System.out.print("Register patient. ");
+                    receptionist.registerPatient(receptionist);
                     System.out.println("Press 1 to register a new patient, 0 to exit this");
                     i=MyUtility.myScanner().next();
                 }while (i.equals("1"));
